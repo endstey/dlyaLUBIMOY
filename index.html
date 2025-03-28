@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Все для любимой принцессы</title>
+    <style>
+        :root {
+            --neon-pink: #ff6ec7;
+            --neon-purple: #9d4edd;
+            --soft-pink: #ffb8e2;
+            --soft-purple: #c77dff;
+            --bg-color: #1a1a2e;
+            --text-color: #f8f9fa;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, var(--neon-pink), var(--neon-purple));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 10px rgba(157, 78, 221, 0.3);
+            animation: glow 2s infinite alternate;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+        }
+        
+        .phone-card {
+            background: rgba(26, 26, 46, 0.8);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 0 20px rgba(157, 78, 221, 0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(157, 78, 221, 0.3);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 0.5s forwards;
+        }
+        
+        .phone-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 30px rgba(157, 78, 221, 0.4);
+        }
+        
+        .phone-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, rgba(255, 110, 199, 0.1), rgba(157, 78, 221, 0.1));
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 15px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .phone-image::before {
+            content: "";
+            position: absolute;
+            width: 150%;
+            height: 150%;
+            background: radial-gradient(circle, rgba(255, 110, 199, 0.1) 0%, transparent 70%);
+            animation: rotate 15s linear infinite;
+        }
+        
+        .phone-image img {
+            max-width: 80%;
+            max-height: 80%;
+            transition: transform 0.3s;
+            z-index: 1;
+            filter: drop-shadow(0 0 10px rgba(255, 110, 199, 0.5));
+        }
+        
+        .phone-card:hover .phone-image img {
+            transform: scale(1.05);
+        }
+        
+        .phone-title {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            color: var(--neon-pink);
+        }
+        
+        .phone-price {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: var(--soft-pink);
+        }
+        
+        .phone-rating {
+            margin-bottom: 15px;
+            color: gold;
+            font-size: 1.1rem;
+        }
+        
+        .phone-specs {
+            margin-bottom: 20px;
+        }
+        
+        .phone-specs li {
+            margin-bottom: 5px;
+            position: relative;
+            padding-left: 20px;
+        }
+        
+        .phone-specs li::before {
+            content: "•";
+            color: var(--neon-purple);
+            position: absolute;
+            left: 0;
+        }
+        
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .buy-btn, .review-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+            flex: 1;
+        }
+        
+        .buy-btn {
+            background: linear-gradient(45deg, var(--neon-pink), var(--neon-purple));
+            box-shadow: 0 0 15px rgba(157, 78, 221, 0.5);
+        }
+        
+        .review-btn {
+            background: linear-gradient(45deg, #4e79ff, #6d4edd);
+            box-shadow: 0 0 15px rgba(78, 121, 255, 0.5);
+        }
+        
+        .buy-btn:hover, .review-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 20px rgba(157, 78, 221, 0.8);
+        }
+        
+        .buy-btn::before, .review-btn::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to bottom right,
+                transparent,
+                transparent,
+                transparent,
+                rgba(255, 255, 255, 0.3),
+                transparent,
+                transparent,
+                transparent
+            );
+            transform: rotate(30deg);
+            transition: all 0.5s;
+        }
+        
+        .buy-btn:hover::before, .review-btn:hover::before {
+            left: 100%;
+        }
+        
+        .sticker {
+            position: fixed;
+            width: 40px;
+            height: 40px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            cursor: pointer;
+            z-index: 100;
+            transition: transform 0.3s;
+            filter: drop-shadow(0 0 5px rgba(255, 110, 199, 0.7));
+        }
+        
+        .sticker:hover {
+            transform: scale(1.2) rotate(15deg);
+        }
+        
+        .sticker-1 {
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23ff6ec7"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>');
+            top: 20%;
+            left: 5%;
+        }
+        
+        .sticker-2 {
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%239d4edd"><path d="M3.5 11c0-3.1 2.2-5.6 5-6.2V3.5c0-.8.7-1.5 1.5-1.5s1.5.7 1.5 1.5v1.3c2.8.6 5 3.1 5 6.2v5l2 2v1H1.5v-1l2-2v-5zm12 5.1c.3-.7.5-1.4.5-2.1v-5c0-2.5-1.8-4.5-4-5-.3-1.1-1.3-2-2.5-2s-2.2.9-2.5 2c-2.2.5-4 2.5-4 5v5c0 .7.2 1.4.5 2.1h12zM12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2z"/></svg>');
+            top: 70%;
+            left: 90%;
+        }
+        
+        .sticker-3 {
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23ff6ec7"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm4.59-12.42L10 14.17l-2.59-2.58L6 13l4 4 8-8z"/></svg>');
+            top: 30%;
+            right: 10%;
+        }
+        
+        .sticker-4 {
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%239d4edd"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>');
+            bottom: 10%;
+            left: 15%;
+        }
+        
+        .sticker-5 {
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23ff6ec7"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14z"/><path d="M7 12h2v5H7zm4-7h2v12h-2zm4 4h2v8h-2z"/></svg>');
+            top: 80%;
+            right: 5%;
+        }
+        
+        .sticker-message {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(26, 26, 46, 0.9);
+            border: 2px solid var(--neon-pink);
+            border-radius: 10px;
+            padding: 20px;
+            z-index: 1000;
+            box-shadow: 0 0 30px rgba(255, 110, 199, 0.7);
+            text-align: center;
+            max-width: 80%;
+            display: none;
+        }
+        
+        .sticker-message p {
+            color: var(--neon-pink);
+            font-size: 1.5rem;
+            margin: 0;
+        }
+        
+        .close-btn {
+            position: absolute;
+            top: 5px;
+            right: 10px;
+            color: var(--neon-purple);
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+        
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 5px var(--neon-pink), 0 0 10px var(--neon-pink);
+            }
+            to {
+                text-shadow: 0 0 10px var(--neon-pink), 0 0 20px var(--neon-purple), 0 0 30px var(--neon-pink);
+            }
+        }
+        
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .phone-card {
+                animation-delay: 0s !important;
+            }
+            
+            .sticker {
+                width: 30px;
+                height: 30px;
+            }
+            
+            .btn-group {
+                flex-direction: column;
+            }
+        }
+        
+        /* Задержки анимации для карточек */
+        .phone-card:nth-child(1) { animation-delay: 0.1s; }
+        .phone-card:nth-child(2) { animation-delay: 0.2s; }
+        .phone-card:nth-child(3) { animation-delay: 0.3s; }
+        .phone-card:nth-child(4) { animation-delay: 0.4s; }
+        .phone-card:nth-child(5) { animation-delay: 0.5s; }
+        .phone-card:nth-child(6) { animation-delay: 0.6s; }
+        .phone-card:nth-child(7) { animation-delay: 0.7s; }
+        .phone-card:nth-child(8) { animation-delay: 0.8s; }
+        .phone-card:nth-child(9) { animation-delay: 0.9s; }
+        .phone-card:nth-child(10) { animation-delay: 1s; }
+        .phone-card:nth-child(11) { animation-delay: 1.1s; }
+        .phone-card:nth-child(12) { animation-delay: 1.2s; }
+        .phone-card:nth-child(13) { animation-delay: 1.3s; }
+        .phone-card:nth-child(14) { animation-delay: 1.4s; }
+        .phone-card:nth-child(15) { animation-delay: 1.5s; }
+        
+        /* Более реалистичные изображения телефонов */
+        .phone-svg {
+            width: 120px;
+            height: 240px;
+            position: relative;
+        }
+        
+        .phone-body {
+            width: 100%;
+            height: 100%;
+            fill: #222;
+            stroke: var(--neon-pink);
+            stroke-width: 2;
+            rx: 10;
+            ry: 10;
+        }
+        
+        .phone-screen {
+            width: 90%;
+            height: 85%;
+            x: 5%;
+            y: 7%;
+            fill: #111;
+            stroke: #444;
+            stroke-width: 1;
+            rx: 5;
+            ry: 5;
+        }
+        
+        .phone-notch {
+            cx: 50%;
+            cy: 3.5%;
+            r: 1.5%;
+            fill: #333;
+        }
+        
+        .phone-camera {
+            cx: 30%;
+            cy: 15%;
+            r: 2%;
+            fill: #555;
+        }
+        
+        .phone-button {
+            width: 20%;
+            height: 3%;
+            x: 40%;
+            y: 92%;
+            fill: #444;
+            rx: 2;
+            ry: 2;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>ВСЕ ДЛЯ ЛЮБИМОЙ ПРИНЦЕССЫ</h1>
+    </header>
+    
+    <div class="container">
+        <!-- Xiaomi 14T Pro -->
+        <div class="phone-card">
+            <div class="phone-image">
+                <svg class="phone-svg" viewBox="0 0 120 240">
+                    <rect class="phone-body" x="5" y="5" width="110" height="230" rx="10" ry="10"/>
+                    <rect class="phone-screen" x="10" y="15" width="100" height="200" rx="5" ry="5"/>
+                    <circle class="phone-notch" cx="60" cy="10" r="2"/>
+                    <circle class="phone-camera" cx="40" cy="30" r="3"/>
+                    <rect class="phone-button" x="50" y="220" width="20" height="5" rx="2" ry="2"/>
+                </svg>
+            </div>
+            <h2 class="phone-title">Xiaomi 14T Pro</h2>
+            <div class="phone-price">≈ 59,990 ₽</div>
+            <div class="phone-rating">★★★★☆</div>
+            <ul class="phone-specs">
+                <li>6.67" AMOLED, 144Hz</li>
+                <li>Snapdragon 8 Gen 2</li>
+                <li>12GB RAM, 256GB ROM</li>
+                <li>200MP + 50MP + 12MP камеры</li>
+                <li>5000mAh, 120W зарядка</li>
+            </ul>
+            <div class="btn-group">
+                <a href="https://market.yandex.ru/product--14t-pro/689461266?sku=103579298241&uniqueId=62878861&do-waremd5=QHEEPrjlifXiQi5ZbFOB7g" class="buy-btn" target="_blank">Купить</a>
+                <a href="https://www.youtube.com/watch?v=hr1HwidiLSo" class="review-btn" target="_blank">Обзор</a>
+            </div>
+        </div>
+        
+        <!-- Xiaomi Redmi Note 13 Pro -->
+        <div class="phone-card">
+            <div class="phone-image">
+                <svg class="phone-svg" viewBox="0 0 120 240">
+                    <rect class="phone-body" x="5" y="5" width="110" height="230" rx="10" ry="10"/>
+                    <rect class="phone-screen" x="10" y="15" width="100" height="200" rx="5" ry="5"/>
+                    <circle class="phone-notch" cx="60" cy="10" r="2"/>
+                    <circle class="phone-camera" cx="40" cy="30" r="3"/>
+                    <rect class="phone-button" x="50" y="220" width="20" height="5" rx="2" ry="2"/>
+                </svg>
+            </div>
+            <h2 class="phone-title">Redmi Note 13 Pro</h2>
+            <div class="phone-price">≈ 34,990 ₽</div>
+            <div class="phone-rating">★★★★☆</div>
+            <ul class="phone-specs">
+                <li>6.67" AMOLED, 120Hz</li>
+                <li>Snapdragon 7s Gen 2</li>
+                <li>8GB RAM, 256GB ROM</li>
+                <li>200MP + 8MP + 2MP камеры</li>
+                <li>5100mAh, 67W зарядка</li>
+            </ul>
+            <div class="btn-group">
+                <a href="https://market.yandex.ru/product--redmi-note-13-pro-5g/15341769?sku=103248284021&uniqueId=182189685&do-waremd5=VvmLgbUamWiqTMLa4lAOkQ" class="buy-btn" target="_blank">Купить</a>
+                <a href="https://www.youtube.com/watch?v=aAhIzWMuD7g" class="review-btn" target="_blank">Обзор</a>
+            </div>
+        </div>
+        
+        <!-- Xiaomi 12X -->
+        <div class="phone-card">
+            <div class="phone-image">
+                <svg class="phone-svg" viewBox="0 0 120 240">
+                    <rect class="phone-body" x="5" y="5" width="110" height="230" rx="10" ry="10"/>
+                    <rect class="phone-screen" x="10" y="15" width="100" height="200" rx="5" ry="5"/>
+                    <circle class="phone-notch" cx="60" cy="10" r="2"/>
+                    <circle class="phone-camera" cx="40" cy="30" r="3"/>
+                    <rect class="phone-button" x="50" y="220" width="20" height="5" rx="2" ry="2"/>
+                </svg>
+            </div>
+            <h2 class="phone-title">Xiaomi 12X</h2>
+            <div class="phone-price">≈ 42,990 ₽</div>
+            <div class="phone-rating">★★★★☆</div>
+            <ul class="phone-specs">
+                <li>6.28" AMOLED, 120Hz</li>
+                <li>Snapdragon 870</li>
+                <li>8GB RAM, 256GB ROM</li>
+                <li>50MP + 13MP + 5MP камеры</li>
+                <li>4500mAh, 67W зарядка</li>
+            </ul>
+            <div class="btn-group">
+                <a href="https://market.yandex.ru/product--xiaomi-12x-8-256-gb-cn-dual-nano-sim-sinii/266710647?sku=103223732340&uniqueId=921284&do-waremd5=w8AxCcdh91G-mAF5odvDnA" class="buy-btn" target="_blank">Купить</a>
+                <a href="https://www.youtube.com/watch?v=h8tQYp9MHF8" class="review-btn" target="_blank">Обзор</a>
+            </div>
+        </div>
+        
+        <!-- POCO F6 Pro -->
+        <div class="phone-card">
+            <div class="phone-image">
+                <svg class="phone-svg" viewBox="0 0 120 240">
+                    <rect class="phone-body" x="5" y="5" width="110" height="230" rx="10" ry="10"/>
+                    <rect class="phone-screen" x="10" y="15" width="100" height="200" rx="5" ry="5"/>
+                    <circle class="phone-notch" cx="60" cy="10" r="2"/>
+                    <circle class="phone-camera" cx="40" cy="30" r="3"/>
+                    <rect class="phone-button" x="50" y="220" width="20" height="5" rx="2" ry="2"/>
+                </svg>
+            </div>
+            <h2 class="phone-title">POCO F6 Pro</h2>
+            <div class="phone-price">≈ 49,990 ₽</div>
+            <div class="phone-rating">★★★★☆</div>
+            <ul class="phone-specs">
+                <li>6.67" AMOLED, 120Hz</li>
+                <li>Snapdragon 8+ Gen 1</li>
+                <li>12GB RAM, 256GB ROM</li>
+                <li>64MP + 8MP + 2MP камеры</li>
+                <li>5000mAh, 67W зарядка</li>
+            </ul>
+            <div class="btn-group">
+                <a href="https://market.yandex.ru/product--poco-f6-pro/124266483?sku=103551165813&uniqueId=750154&do-waremd5=73RGoKY9IrsX1OsZImzJKA" class="buy-btn" target="_blank">Купить</a>
+                <a href="https://www.youtube.com/watch?v=Z9C7y9rPKAM" class="review-btn" target="_blank">Обзор</a>
+            </div>
+        </div>
+        
+        <!-- Galaxy S25 Plus 5G -->
+        <div class="phone-card">
+            <div class="phone-image">
+                <svg class="phone-svg" viewBox="0 0 120 240">
+                    <rect class="phone-body" x="5" y="5" width="110" height="230" rx="10" ry="10"/>
+                    <rect class="phone-screen" x="10" y="15" width="100" height="200" rx="5" ry="5"/>
+                    <circle class="phone-notch" cx="60" cy="10" r="2"/>
+                    <circle class="phone-camera" cx="40" cy="30" r="3"/>
+                    <rect class="phone-button" x="50" y="220" width="20" height="5" rx="2" ry="2"/>
+                </svg>
+            </div>
+            <h2 class="phone-title">Galaxy S25 Plus 5G</h2>
+            <div class="phone-price">≈ 89,990 ₽</div>
+            <div class="phone-rating">★★★★★</div>
+            <ul class="phone-specs">
+                <li>6.6" Dynamic AMOLED 2X, 120Hz</li>
+                <li>Exynos 2400 / Snapdragon 8 Gen 4</li>
+                <li>12GB RAM, 256GB ROM</li>
+                <li>200MP + 12MP + 10MP камеры</li>
+                <li>4900mAh, 45W зарядка</li>
+            </ul>
+            <div class="btn-group">
+                <a href="https://market.yandex.ru/product--galaxy-s25/939398372?sku=103718888952&uniqueId=62878861&do-waremd5=7y6MqUi99K7B3EJ13jKoxA" class="buy-btn" target="_blank">Купить</a>
+                <a href="https://www.youtube.com/watch?v=T2iKAIyxN64" class="review-btn" target="_blank">Обзор</a>
+            </div>
+        </div>
+        
+        <!-- Oppo Reno 12 Pro -->
+        <div class="phone-card">
+            <div class="phone-image">
+                <svg class="phone-svg" viewBox="0 0 120 240">
+                    <rect class="phone-body" x="5" y="5" width="110" height="230" rx="10" ry="10"/>
+                    <rect class="phone-screen" x="10" y="15" width="100" height="200" rx="5" ry="5"/>
+                    <circle class="phone-notch" cx="60" cy="10" r="2"/>
+                    <circle class="phone-camera" cx="40" cy="30" r="3"/>
+                    <rect class="phone-button" x="50" y="220" width="20" height="5" rx="2" ry="2"/>
+                </svg>
+            </div>
+            <h2 class="phone-title">Oppo Reno 12 Pro</h2>
+            <div class="phone-price">≈ 54,990 ₽</div>
+            <div class="phone-rating">★★★★☆</div>
+            <ul class="phone-specs">
+                <li>6.7" AMOLED, 120Hz</li>
+                <li>Dimensity 9200+</li>
+                <li>12GB RAM, 512GB ROM</li>
+                <li>50MP + 50MP + 8MP камеры</li>
+                <li>4600mAh, 80W зарядка</li>
+            </ul>
+            <div class="btn-group">
+                <a href="https://market.yandex.ru/product--smartfon-oppo-reno-12-pro-12-512gb-space-brown-korichnevyi-global-2sim/865207987?sku=103642422078&uniqueId=119485579&do-waremd5=FpF15o4VQcoRIT8KR89b0w" class="buy-btn" target="_blank">Купить</a>
+                <a href="https://www.youtube.com/watch?v=fSJmCGzHDRg" class="review-btn" target="_blank">Обзор</a>
+            </div>
+        </div>
+        
+        <!-- Galaxy S24 FE -->
+        <div class="phone-card">
+            <div class="phone-image">
+                <svg class="phone-svg" viewBox="0 0 120 240">
+                    <rect class="phone-body" x="5" y="5" width="110" height="230" rx="10" ry="10"/>
+                    <rect class="phone-screen" x="10" y="15" width="100" height="200" rx="5" ry="5"/>
+                    <circle class="phone-notch" cx="60" cy="10" r="2"/>
+                    <circle class="phone-camera" cx="40" cy="30" r="3"/>
+                    <rect class="phone-button" x="50" y="220" width="20" height="5" rx="2" ry="2"/>
+                </svg>
+            </div>
+            <h2 class="phone-title">Galaxy S24 FE</h2>
+            <div class="phone-price">≈ 59,990 ₽</div>
+            <div class="phone-rating">★★★★☆</div>
+            <ul class="phone-specs">
+                <li>6.4" Dynamic AMOLED 2X, 120Hz</li>
+                <li>Exynos 2200</li>
+                <li>8GB RAM, 128/256GB ROM</li>
+                <li>50MP + 12MP + 8MP камеры</li>
+                <li>4500mAh, 25W зарядка</li>
+            </ul>
+            <div class="btn-group">
+                <a href="https://market.yandex.ru/product--galaxy-s24-fe/702969125?sku=103552368225&uniqueId=147021296&do-waremd5=25Fd_rFOmNHlICyFuxv0BQ" class="buy-btn" target="_blank">Купить</a>
+                <a href="https://www.youtube.com/watch?v=x0_fdeUOmWI" class="review-btn" target="_blank">Обзор</a>
+            </div>
+        </div>
+        
+        <!-- POCO X7 Pro -->
+        <div class="phone-card">
+            <div class="phone-image">
+                <svg class="phone-svg" viewBox="0 0 120 240">
+                    <rect class="phone-body" x="5" y="5" width="110" height="230" rx="10" ry="10"/>
+                    <rect class="phone-screen" x="10" y="15" width="100" height="200" rx="5" ry="5"/>
+                    <circle class="phone-notch" cx="60" cy="10" r="2"/>
+                    <circle class="phone-camera" cx="40" cy="30" r="3"/>
+                    <rect class="phone-button" x="50" y="220" width="20" height="5" rx="2" ry="2"/>
+                </svg>
+            </div>
+            <h2 class="phone-title">POCO X7 Pro</h2>
+            <div class="phone-price">≈ 29,990 ₽</div>
+            <div class="phone-rating">★★★☆☆</div>
+            <ul class="phone-specs">
+                <li>6.67" AMOLED, 120Hz</li>
+                <li>Dimensity 8200</li>
+                <li>8GB RAM, 256GB ROM</li>
+                <li>64MP + 8MP + 2MP камеры</li>
+                <li>5000mAh, 67W зарядка</li>
+            </ul>
+            <div class="btn-group">
+                <a href="https://market.yandex.ru/product--poco-x7-pro/945994464?sku=103732010034&uniqueId=16870397&do-waremd5=IhwVdR8VGXPP7FalJjIulg" class="buy-btn" target="_blank">Купить</a>
+                <a href="https://www.youtube.com/watch?v=uUKkxYUJ4xE" class="review-btn" target="_blank">Обзор</a>
+            </div>
+        </div>
+        
+        <!-- ASUS Zenfone 10 -->
+        <div class="phone-card">
+            <div class="phone-image">
+                <svg class="phone-svg" viewBox="0 0 120 240">
+                    <rect class="phone-body" x="5" y="5" width="110" height="230" rx="10" ry="10"/>
+                    <rect class="phone-screen" x="10" y="15" width="100" height="200" rx="5" ry="5"/>
+                    <circle class="phone-notch" cx="60" cy="10" r="2"/>
+                    <circle class="phone-camera" cx="40" cy="30" r="3"/>
+                    <rect class="phone-button" x="50" y="220" width="20" height="5" rx="2" ry="2"/>
+                </svg>
+            </div>
+            <h2 class="phone-title">ASUS Zenfone 10</h2>
+            <div class="phone-price">≈ 69,990 ₽</div>
+            <div class="phone-rating">★★★★☆</div>
+            <ul class="phone-specs">
+                <li>5.92" AMOLED, 144Hz</li>
+                <li>Snapdragon 8 Gen 2</li>
+                <li>16GB RAM, 512GB ROM</li>
+                <li>50MP + 13MP камеры</li>
+                <li>4300mAh, 30W зарядка</li>
+            </ul>
+            <div class="btn-group">
+                <a href="https://market.yandex.ru/product--zenfone-10/1896699935?sku=102095089041&uniqueId=118779342&do-waremd5=FRrFNGoyuQKkxqn6d7OrMw" class="buy-btn" target="_blank">Купить</a>
+                <a href="https://www.youtube.com/watch?v=flSHNGJK8UE" class="review-btn" target="_blank">Обзор</a>
+            </div>
+        </div>
+        
+        <!-- Huawei P60 Pro -->
+        <div class="phone-card">
+            <div class="phone-image">
+                <svg class="phone-svg" viewBox="0 0 120 240">
+                    <rect class="phone-body" x="5" y="5" width="110" height="230" rx="10" ry="10"/>
+                    <rect class="phone-screen" x="10" y="15" width="100" height="200" rx="5" ry="5"/>
+                    <circle class="phone-notch" cx="60" cy="10" r="2"/>
+                    <circle class="phone-camera" cx="40" cy="30" r="3"/>
+                    <rect class="phone-button" x="50" y="220" width="20" height="5" rx="2" ry="2"/>
+                </svg>
+            </div>
+            <h2 class="phone-title">Huawei P60 Pro</h2>
+            <div class="phone-price">≈ 79,990 ₽</div>
+            <div class="phone-rating">★★★★☆</div>
+            <ul class="phone-specs">
+                <li>6.67" OLED, 120Hz</li>
+                <li>Snapdragon 8+ Gen 1 4G</li>
+                <li>12GB RAM, 512GB ROM</li>
+                <li>48MP + 48MP + 48MP камеры</li>
+                <li>4815mAh, 88W зарядка</li>
+            </ul>
+            <div class="btn-group">
+                <a href="https://market.yandex.ru/product--smartfon-huawei-p60-pro-8-256gb-lte-dual-sim-rococo-pearl/1824710490" class="buy-btn" target="_blank">Купить</a>
+                <a href="https://www.youtube.com/watch?v=_Np3LzwMHfk" class="review-btn" target="_blank">Обзор</a>
+            </div>
+        </div>
+        
+        <!-- Realme GT 7 Pro -->
+        <div class="phone-card">
+            <div class="phone-image">
+                <svg class="phone-svg" viewBox="0 0 120 240">
+                    <rect class="phone-body" x="5" y="5" width="110" height="230" rx="10" ry="10"/>
+                    <rect class="phone-screen" x="10" y="15" width="100" height="200" rx="5" ry="5"/>
+                    <circle class="phone-notch" cx="60" cy="10" r="2"/>
+                    <circle class="phone-camera" cx="40" cy="30" r="3"/>
+                    <rect class="phone-button" x="50" y="220" width="20" height="5" rx="2" ry="2"/>
+                </svg>
+            </div>
+            <h2 class="phone-title">Realme GT 7 Pro</h2>
+            <div class="phone-price">≈ 49,990 ₽</div>
+            <div class="phone-rating">★★★★☆</div>
+            <ul class="phone-specs">
+                <li>6.78" AMOLED, 144Hz</li>
+                <li>Snapdragon 8 Gen 3</li>
+                <li>16GB RAM, 1TB ROM</li>
+                <li>50MP + 50MP + 8MP камеры</li>
+                <li>5000mAh, 240W зарядка</li>
+            </ul>
+            <div class="btn-group">
+                <a href="https://market.yandex.ru/product--gt-7-pro/846960931?sku=103626946678&uniqueId=43149540&do-waremd5=BJSOAREWs6YN-5SgiRXKVg" class="buy-btn" target="_blank">Купить</a>
+                <a href="https://www.youtube.com/watch?v=iz3y4qFZLOA" class="review-btn" target="_blank">Обзор</a>
+            </div>
+        </div>
+        
+        <!-- Sony Xperia 5 V -->
+        <div class="phone-card">
+            <div class="phone-image">
+                <svg class="phone-svg" viewBox="0 0 120 240">
+                    <rect class="phone-body" x="5" y="5" width="110" height="230" rx="10" ry="10"/>
+                    <rect class="phone-screen" x="10" y="15" width="100" height="200" rx="5" ry="5"/>
+                    <circle class="phone-notch" cx="60" cy="10" r="2"/>
+                    <circle class="phone-camera" cx="40" cy="30" r="3"/>
+                    <rect class="phone-button" x="50" y="220" width="20" height="5" rx="2" ry="2"/>
+                </svg>
+            </div>
+            <h2 class="phone-title">Sony Xperia 5 V</h2>
+            <div class="phone-price">≈ 89,990 ₽</div>
+            <div class="phone-rating">★★★★☆</div>
+            <ul class="phone-specs">
+                <li>6.1" OLED, 120Hz</li>
+                <li>Snapdragon 8 Gen 2</li>
+                <li>8GB RAM, 128GB ROM</li>
+                <li>48MP + 12MP камеры</li>
+                <li>5000mAh, 30W зарядка</li>
+            </ul>
+            <div class="btn-group">
+                <a href="https://market.yandex.ru/product--xperia-5-v/1928742512?sku=102383000160&uniqueId=708310&do-waremd5=JGrrFvI_zeIo5hFxCfXbOg" class="buy-btn" target="_blank">Купить</a>
+                <a href="https://www.youtube.com/watch?v=QNn04a0_kL8" class="review-btn" target="_blank">Обзор</a>
+            </div>
+        </div>
+        
+        <!-- Sony Xperia 1 V -->
+        <div class="phone-card">
+            <div class="phone-image">
+                <svg class="phone-svg" viewBox="0 0 120 240">
+                    <rect class="phone-body" x="5" y="5" width="110" height="230" rx="10" ry="10"/>
+                    <rect class="phone-screen" x="10" y="15" width="100" height="200" rx="5" ry="5"/>
+                    <circle class="phone-notch" cx="60" cy="10" r="2"/>
+                    <circle class="phone-camera" cx="40" cy="30" r="3"/>
+                    <rect class="phone-button" x="50" y="220" width="20" height="5" rx="2" ry="2"/>
+                </svg>
+            </div>
+            <h2 class="phone-title">Sony Xperia 1 V</h2>
+            <div class="phone-price">≈ 109,990 ₽</div>
+            <div class="phone-rating">★★★★★</div>
+            <ul class="phone-specs">
+                <li>6.5" 4K OLED, 120Hz</li>
+                <li>Snapdragon 8 Gen 2</li>
+                <li>12GB RAM, 256GB ROM</li>
+                <li>48MP + 12MP + 12MP камеры</li>
+                <li>5000mAh, 30W зарядка</li>
+            </ul>
+            <div class="btn-group">
+                <a href="https://www.ozon.ru/product/sony-smartfon-xperia-1-v-global-12-256-gb-chernyy-1867686059/" class="buy-btn" target="_blank">Купить</a>
+                <a href="https://www.youtube.com/watch?v=NhmncCdpVO0" class="review-btn" target="_blank">Обзор</a>
+            </div>
+        </div>
+        
+        <!-- Sony Xperia 1 IV -->
+        <div class="phone-card">
+            <div class="phone-image">
+                <svg class="phone-svg" viewBox="0 0 120 240">
+                    <rect class="phone-body" x="5" y="5" width="110" height="230" rx="10" ry="10"/>
+                    <rect class="phone-screen" x="10" y="15" width="100" height="200" rx="5" ry="5"/>
+                    <circle class="phone-notch" cx="60" cy="10" r="2"/>
+                    <circle class="phone-camera" cx="40" cy="30" r="3"/>
+                    <rect class="phone-button" x="50" y="220" width="20" height="5" rx="2" ry="2"/>
+                </svg>
+            </div>
+            <h2 class="phone-title">Sony Xperia 1 IV</h2>
+            <div class="phone-price">≈ 89,990 ₽</div>
+            <div class="phone-rating">★★★★☆</div>
+            <ul class="phone-specs">
+                <li>6.5" 4K OLED, 120Hz</li>
+                <li>Snapdragon 8 Gen 1</li>
+                <li>12GB RAM, 256GB ROM</li>
+                <li>12MP + 12MP + 12MP камеры</li>
+                <li>5000mAh, 30W зарядка</li>
+            </ul>
+            <div class="btn-group">
+                <a href="https://market.yandex.ru/product--xperia-1-iv/1753676593?sku=101757986052&uniqueId=182574207&do-waremd5=ESNKUCVcyf3aunqcwqT64Q" class="buy-btn" target="_blank">Купить</a>
+                <a href="https://www.youtube.com/watch?v=Sd8hpYCKHCA" class="review-btn" target="_blank">Обзор</a>
+            </div>
+        </div>
+        
+        <!-- Xiaomi Mi 11 Ultra -->
+        <div class="phone-card">
+            <div class="phone-image">
+                <svg class="phone-svg" viewBox="0 0 120 240">
+                    <rect class="phone-body" x="5" y="5" width="110" height="230" rx="10" ry="10"/>
+                    <rect class="phone-screen" x="10" y="15" width="100" height="200" rx="5" ry="5"/>
+                    <circle class="phone-notch" cx="60" cy="10" r="2"/>
+                    <circle class="phone-camera" cx="40" cy="30" r="3"/>
+                    <rect class="phone-button" x="50" y="220" width="20" height="5" rx="2" ry="2"/>
+                </svg>
+            </div>
+            <h2 class="phone-title">Xiaomi Mi 11 Ultra</h2>
+            <div class="phone-price">≈ 69,990 ₽</div>
+            <div class="phone-rating">★★★★★</div>
+            <ul class="phone-specs">
+                <li>6.81" AMOLED, 120Hz</li>
+                <li>Snapdragon 888</li>
+                <li>12GB RAM, 512GB ROM</li>
+                <li>50MP + 48MP + 48MP камеры</li>
+                <li>5000mAh, 67W зарядка</li>
+            </ul>
+            <div class="btn-group">
+                <a href="https://market.yandex.ru/product--mi-11-ultra/958119012?sku=101318772769&uniqueId=175669695&do-waremd5=fxYesThRDOBfKse2a_9iVw" class="buy-btn" target="_blank">Купить</a>
+                <a href="https://www.youtube.com/watch?v=jsZZ2xt6r7M" class="review-btn" target="_blank">Обзор</a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Стикеры -->
+    <div class="sticker sticker-1" onclick="showStickerMessage()"></div>
+    <div class="sticker sticker-2" onclick="showStickerMessage()"></div>
+    <div class="sticker sticker-3" onclick="showStickerMessage()"></div>
+    <div class="sticker sticker-4" onclick="showStickerMessage()"></div>
+    <div class="sticker sticker-5" onclick="showStickerMessage()"></div>
+    
+    <!-- Сообщение стикера -->
+    <div class="sticker-message" id="stickerMessage">
+        <span class="close-btn" onclick="hideStickerMessage()">×</span>
+        <p>Привет, любимая ❤️</p>
+    </div>
+    
+    <script>
+        // Показать сообщение стикера
+        function showStickerMessage() {
+            document.getElementById('stickerMessage').style.display = 'block';
+        }
+        
+        // Скрыть сообщение стикера
+        function hideStickerMessage() {
+            document.getElementById('stickerMessage').style.display = 'none';
+        }
+        
+        // Фиксированное позиционирование стикеров при скролле
+        window.addEventListener('scroll', function() {
+            const stickers = document.querySelectorAll('.sticker');
+            stickers.forEach(sticker => {
+                const rect = sticker.getBoundingClientRect();
+                sticker.style.position = 'fixed';
+                sticker.style.top = rect.top + 'px';
+                sticker.style.left = rect.left + 'px';
+            });
+        });
+        
+        // Инициализация стикеров при загрузке
+        window.onload = function() {
+            const stickers = document.querySelectorAll('.sticker');
+            const positions = [
+                { top: '20%', left: '5%' },
+                { top: '70%', left: '90%' },
+                { top: '30%', right: '10%', left: 'auto' },
+                { bottom: '10%', left: '15%', top: 'auto' },
+                { top: '80%', right: '5%', left: 'auto' }
+            ];
+            
+            stickers.forEach((sticker, index) => {
+                const pos = positions[index];
+                Object.assign(sticker.style, pos);
+                
+                // Случайный поворот
+                const randomRotate = Math.random() * 30 - 15; // -15 до +15 градусов
+                sticker.style.transform = `rotate(${randomRotate}deg)`;
+            });
+        };
+    </script>
+</body>
+</html>
